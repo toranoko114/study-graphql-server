@@ -1,4 +1,6 @@
-const { ApolloServer, gql } = require("apollo-server");
+const { ApolloServer } = require("apollo-server");
+const fs = require("fs");
+const path = require("path");
 
 // 投稿内容を静的に設定（あとからDB取得できるようにする）
 const links = [
@@ -8,24 +10,6 @@ const links = [
     url: "https://www.google.com/?hl=ja",
   },
 ];
-
-// GraphQLのスキーマ定義
-const typeDefs = gql`
-  type Query {
-    info: String!
-    feed: [Link]!
-  }
-
-  type Mutation {
-    post(url: String!, description: String!): Link!
-  }
-
-  type Link {
-    id: ID!
-    description: String!
-    url: String!
-  }
-`;
 
 // resolvers関数
 const resolvers = {
@@ -49,7 +33,7 @@ const resolvers = {
 };
 
 const server = new ApolloServer({
-  typeDefs,
+  typeDefs: fs.readFileSync(path.join(__dirname, "schema.graphql"), "utf-8"),
   resolvers,
 });
 
