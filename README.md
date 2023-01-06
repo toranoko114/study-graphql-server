@@ -7,3 +7,9 @@ https://www.apollographql.com/docs/apollo-server/getting-started
 ### Prisma
 
 https://www.prisma.io/
+
+### Prisma Studio
+
+```
+npx prisma studio
+```
